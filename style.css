@@ -134,6 +134,37 @@ header.nav-active {
     opacity: 1;
 }
 
+/* === HEADER ACTIONS (Icone Profile + Burger) === */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.profile-btn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: rotate(15deg);
+}
+
+.profile-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
 /* === MENU MOBILE === */
 .mobile-menu {
     position: fixed;
@@ -728,7 +759,7 @@ header.nav-active {
     text-decoration: underline;
 }
 
-/* = 7. DÉTAIL PROJET (Microbit, Turtel, Sucette) = */
+/* = 7. DÉTAIL PROJET = */
 
 .project-hero {
     position: relative;
@@ -1154,7 +1185,7 @@ iframe {
     color: #fff;
 }
 
-/* = 9.creation en cour = */
+/* = 9. creation en cour = */
 
 .creation-container {
     flex: 1;
@@ -1264,7 +1295,126 @@ footer {
     width: 100%;
 }
 
-/* = 10. RESPONSIVE (MOBILE) = */
+/* = 11. MODAL PROFILE (NOUVEAU) = */
+
+.modal-overlay {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-glass {
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    transform: scale(0.95);
+    animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: scale(0.95) translateY(20px); } to { transform: scale(1) translateY(0); } }
+
+.modal-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.modal-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    background: rgba(255,255,255,0.1);
+}
+
+.profile-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--accent-blue);
+    transform: translateY(-3px);
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.profile-card h4 {
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.profile-card p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.text-btn:hover { color: var(--text-main); }
+
+
+/* = 12. RESPONSIVE (MOBILE) = */
 
 @media (max-width: 800px) {
     .desktop-nav {
@@ -1418,6 +1568,16 @@ footer {
     .social-bubble-wrapper {
         justify-content: center;
         width: 100%;
+    }
+
+    /* Modal Mobile Adaptation */
+    .profile-cards-container {
+        grid-template-columns: 1fr; /* Cartes verticales sur mobile */
+        gap: 10px;
+    }
+    .profile-card {
+        flex-direction: row;
+        padding: 15px;
     }
 }
 

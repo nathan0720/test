@@ -1,4 +1,4 @@
-// GESTION DU MENU MOBILE (FLUIDE & SANS TRAIT)
+// GESTION DU MENU MOBILE
 document.addEventListener('DOMContentLoaded', () => {
     const menuCheckbox = document.getElementById('menuCheckbox');
     const menu = document.getElementById('mobileMenu');
@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         menu.addEventListener('click', (event) => {
-            // Si l'élément cliqué n'est pas un lien <a>
             if (event.target.tagName !== 'A') {
                 closeMenu();
             }
@@ -42,10 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Logique globale pour les boutons de copie (Code et Email)
+// Logique globale pour les boutons de copie
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- CAS 1 : Boutons de code classiques (ex: maison.html) ---
     const codeButtons = document.querySelectorAll('.copy-btn');
     codeButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -59,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- CAS 2 : Bouton Email spécifique ---
     const emailBtn = document.getElementById('copyEmail');
     const emailMsg = document.getElementById('copyMessage');
     const myEmail = "nathan07.bergeon@gmail.com";
@@ -73,14 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CAS 3 : Bouton Partager spécifique ---
     const shareBtn = document.getElementById('shareBtn');
     const shareMsg = document.getElementById('shareMessage');
 
     if (shareBtn && shareMsg) {
         shareBtn.addEventListener('click', () => {
             const siteUrl = window.location.href;
-
             navigator.clipboard.writeText(siteUrl).then(() => {
                 shareMsg.classList.add('show');
                 setTimeout(() => {
@@ -92,13 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fonction utilitaire pour l'animation des boutons de code
     function copyToClipboard(text, button) {
         navigator.clipboard.writeText(text).then(() => {
             const originalHTML = button.innerHTML;
             button.classList.add('copied');
             button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Copié !';
-            
             setTimeout(() => {
                 button.classList.remove('copied');
                 button.innerHTML = originalHTML;
@@ -107,21 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//  Logique de la machine à écrire 
+// Machine à écrire
 document.addEventListener('DOMContentLoaded', () => {
     const textElement = document.getElementById('typewriter-dynamic');
     const cursor = document.getElementById('cursor');
     
-    if (!textElement || !cursor) {
-        return; 
-    }
+    if (!textElement || !cursor) return; 
 
     const phrases = ["une ligne à la fois."];
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     let typingSpeed = 100;
-    
     let animationStarted = false;
     let animationTimeout;
 
@@ -132,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yoyo: true,
         duration: 0.5
     });
+
     function type() {
         if (window.innerWidth <= 800) {
             animationStarted = false;
@@ -181,6 +171,101 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', checkScreenAndAnimate);
-
     checkScreenAndAnimate();
+});
+
+// --- SYSTÈME DE NOTIFICATION DISCORD ET MODAL ---
+const DISCORD_URL = "https://discordapp.com/api/webhooks/1465838008958980128/BYgFcckr5DD_TnGw3nSRC-C5P0h9qfulOZ5lX_msCKTrLvbckof1lFq51lQNNNSZyse7";
+
+async function notifyDiscord(message) {
+    try {
+        await fetch(DISCORD_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: message })
+        });
+    } catch (e) { console.error("Erreur Discord:", e); }
+}
+
+window.addEventListener('load', () => {
+    // Éléments du nouveau modal
+    const modal = document.getElementById('profile-modal');
+    const profileTrigger = document.getElementById('profileTrigger');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const nameInput = document.getElementById('user-name-input');
+    const cards = document.querySelectorAll('.profile-card');
+    
+    const storageKey = 'nathan_portfolio_user';
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    let savedUser = JSON.parse(localStorage.getItem(storageKey));
+
+    // FONCTION : Ouvrir le modal
+    function openModal() {
+        if(modal) modal.style.display = 'flex';
+        // Pré-remplir si existe
+        if (savedUser && nameInput) {
+            nameInput.value = savedUser.name;
+        }
+    }
+
+    // FONCTION : Fermer le modal
+    function closeModal() {
+        if(modal) modal.style.display = 'none';
+    }
+
+    // 1. Gestion de l'ouverture automatique ou manuelle
+    if (!savedUser) {
+        // Premier visiteur : on ouvre le modal
+        setTimeout(openModal, 1000); 
+    } else {
+        // Visiteur connu : notification retour
+        savedUser.visits += 1;
+        localStorage.setItem(storageKey, JSON.stringify(savedUser));
+        notifyDiscord(`🔄 **RETOUR**\n👤 **${savedUser.name}** (${savedUser.type})\n🔢 **Visite n°** : ${savedUser.visits}\n📍 **Page** : \`${currentPage}\``);
+    }
+
+    // Bouton Header pour changer de profil
+    if (profileTrigger) {
+        profileTrigger.addEventListener('click', openModal);
+    }
+
+    // Bouton Fermer
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    // Clic sur une carte de profil
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const type = card.getAttribute('data-type');
+            const name = nameInput.value.trim() || "Anonyme";
+            
+            // Mise à jour ou création user
+            const userData = { 
+                name: name, 
+                type: type, 
+                visits: savedUser ? savedUser.visits : 1 
+            };
+            
+            localStorage.setItem(storageKey, JSON.stringify(userData));
+            savedUser = userData; // Mettre à jour la var locale
+
+            closeModal();
+
+            // Notification Discord adaptée
+            const emoji = type === "Ecole" ? "🎓" : (type === "Entreprise" ? "💼" : "👋");
+            notifyDiscord(`🚀 **PROFIL DÉFINI**\n👤 **Nom** : ${name}\n${emoji} **Type** : ${type}\n📄 **Page** : \`${currentPage}\``);
+        });
+    });
+
+    // Suivi de navigation
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            const target = link.getAttribute('href');
+            const user = JSON.parse(localStorage.getItem(storageKey)) || { name: "Inconnu" };
+            if (target && !target.startsWith('http') && target !== "#") {
+                notifyDiscord(`👀 **NAVIGATION** : **${user.name}** va vers \`${target}\``);
+            }
+        });
+    });
 });

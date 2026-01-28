@@ -1,63 +1,201 @@
-// GESTION DU MENU MOBILE
+/* = CONFIGURATION = */
+const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1465838008958980128/BYgFcckr5DD_TnGw3nSRC-C5P0h9qfulOZ5lX_msCKTrLvbckof1lFq51lQNNNSZyse7"; 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuQDx7FGROb-UsolVpdw4obYaTFk-Y6UP87Z9sfNfDVyWMAVgegpzB8sMk2GqQwQ3g/exec"; 
+
+/* = ICONES SVG = */
+const ICONS = {
+    defaut: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+    Ecole: `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>`,
+    Entreprise: `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
+    Curieux: `<svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>` // Main (Hand Wave)
+};
+
+/* = LOGIQUE PRINCIPALE = */
 document.addEventListener('DOMContentLoaded', () => {
-    const menuCheckbox = document.getElementById('menuCheckbox');
-    const menu = document.getElementById('mobileMenu');
-    const header = document.querySelector('header');
 
-    const closeMenu = () => {
-        menu.classList.remove('open');
-        header.classList.remove('nav-active');
-        menuCheckbox.checked = false;
-        document.body.style.overflow = '';
-    };
+    /* --- 1. GESTION DU PROFIL & ANALYTICS --- */
+    const profileTrigger = document.getElementById('profileTrigger');
+    const modal = document.getElementById('profile-modal');
+    const closeXBtn = document.getElementById('close-modal-x'); // Croix
+    const saveBtn = document.getElementById('save-profile-btn'); // Bouton Enregistrer
+    const cards = document.querySelectorAll('.profile-card');
+    const nameInput = document.getElementById('user-name-input');
+    
+    const storageKey = 'nathan_portfolio_user';
+    
+    // Variables temporaires pour le choix en cours
+    let selectedType = null;
+    let savedUser = JSON.parse(localStorage.getItem(storageKey));
 
-    const openMenu = () => {
-        menu.classList.add('open');
-        header.classList.add('nav-active');
-        document.body.style.overflow = 'hidden';
-    };
-
-    if (menuCheckbox && menu) {
-        menuCheckbox.addEventListener('change', () => {
-            if (menuCheckbox.checked) openMenu();
-            else closeMenu();
-        });
-
-        menu.addEventListener('click', (event) => {
-            if (event.target.tagName !== 'A') {
-                closeMenu();
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeMenu(); 
-            }
-        });
-        
-        menu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => closeMenu());
-        });
+    // Mettre à jour l'icône dans le header
+    function updateHeaderIcon(type) {
+        if(profileTrigger) {
+            profileTrigger.innerHTML = ICONS[type] || ICONS['defaut'];
+            // Si icône par défaut ou pas de type, pulse animation
+            if(!type || type === 'defaut') profileTrigger.classList.add('needs-setup');
+            else profileTrigger.classList.remove('needs-setup');
+        }
     }
-});
 
-// Logique globale pour les boutons de copie
-document.addEventListener('DOMContentLoaded', () => {
-    const codeButtons = document.querySelectorAll('.copy-btn');
-    codeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const codeBlock = document.getElementById(targetId);
+    // Gestion Ouverture/Fermeture
+    function openModal() { modal.style.display = 'flex'; }
+    function closeModal() { modal.style.display = 'none'; }
 
-            if (codeBlock) {
-                const codeText = codeBlock.textContent.trim();
-                copyToClipboard(codeText, button);
-            }
+    // Init
+    if (savedUser) {
+        updateHeaderIcon(savedUser.type);
+        selectedType = savedUser.type; // Pré-sélection
+        sendAnalytics(savedUser, "Visite (Retour)");
+    } else {
+        updateHeaderIcon('defaut');
+        setTimeout(openModal, 3000); // Auto-open
+        sendAnalytics({name: "Inconnu", type: "Non défini"}, "Nouvelle Visite");
+    }
+
+    // Ouvrir le modal au clic sur l'icône
+    profileTrigger.addEventListener('click', () => {
+        openModal();
+        if(savedUser) {
+            nameInput.value = savedUser.name || "";
+            // Surligner la carte déjà choisie
+            cards.forEach(c => c.classList.remove('selected'));
+            const currentCard = document.querySelector(`.profile-card[data-type="${savedUser.type}"]`);
+            if(currentCard) currentCard.classList.add('selected');
+        }
+    });
+
+    // 1. Choix d'une carte (juste visuel pour l'instant)
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            cards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedType = card.getAttribute('data-type');
         });
     });
 
+    // 2. Bouton ENREGISTRER (Action finale)
+    if(saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            if(!selectedType) {
+                alert("Merci de sélectionner un profil (Curieux, École ou Recruteur)");
+                return;
+            }
+            const name = nameInput.value.trim() || "Anonyme";
+            
+            // Sauvegarde
+            savedUser = { name: name, type: selectedType, lastVisit: new Date().toISOString() };
+            localStorage.setItem(storageKey, JSON.stringify(savedUser));
+
+            // UI Updates
+            updateHeaderIcon(selectedType);
+            closeModal();
+
+            // Notif
+            sendAnalytics(savedUser, "Profil Mis à jour");
+        });
+    }
+
+    // 3. Bouton CROIX (Fermer sans sauver + Pulse)
+    if(closeXBtn) {
+        closeXBtn.addEventListener('click', () => {
+            closeModal();
+            // Si pas d'utilisateur sauvé, on fait clignoter l'icone pour dire "eh oh config moi"
+            if(!savedUser) profileTrigger.classList.add('needs-setup');
+        });
+    }
+
+    // Fermer en cliquant en dehors
+    modal.addEventListener('click', (e) => {
+        if(e.target === modal) {
+            closeModal();
+            if(!savedUser) profileTrigger.classList.add('needs-setup');
+        }
+    });
+
+    /* --- 2. FONCTIONS D'ENVOI (Analytics) --- */
+    function sendAnalytics(user, action) {
+        const currentPage = window.location.pathname.split("/").pop() || "index.html";
+        const data = {
+            name: user.name,
+            type: user.type,
+            page: currentPage,
+            action: action,
+            userAgent: navigator.userAgent
+        };
+        // Google Sheets
+        if(GOOGLE_SCRIPT_URL.includes("script.google.com")) {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST", mode: "no-cors", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            }).catch(e => console.error("Erreur Sheets", e));
+        }
+        // Discord
+        if(DISCORD_WEBHOOK_URL.includes("discord")) {
+            const discordMsg = { content: `📊 **${action}**\n👤 **${user.name}** (${user.type})\n📍 ${currentPage}` };
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(discordMsg)
+            }).catch(e => console.error("Erreur Discord", e));
+        }
+    }
+
+    /* --- 3. MACHINE A ECRIRE (Restaurée) --- */
+    const textElement = document.getElementById('typewriter-dynamic');
+    const cursor = document.getElementById('cursor');
+    
+    if (textElement && cursor) {
+        const phrases = ["une ligne à la fois."];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        let animationStarted = false;
+        let animationTimeout;
+
+        gsap.to(cursor, { opacity: 0, ease: "power2.inOut", repeat: -1, yoyo: true, duration: 0.5 });
+
+        function type() {
+            if (window.innerWidth <= 800) { animationStarted = false; return; }
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--; typingSpeed = 50;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++; typingSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true; typingSpeed = 2000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typingSpeed = 500;
+            }
+            animationTimeout = setTimeout(type, typingSpeed);
+        }
+
+        function checkScreenAndAnimate() {
+            if (window.innerWidth <= 800) {
+                clearTimeout(animationTimeout); textElement.textContent = phrases[0];
+                cursor.style.display = 'none'; animationStarted = false;
+            } else {
+                cursor.style.display = 'inline-block';
+                if (!animationStarted) {
+                    charIndex = 0; phraseIndex = 0; isDeleting = false;
+                    animationStarted = true; type();
+                }
+            }
+        }
+        window.addEventListener('resize', checkScreenAndAnimate);
+        checkScreenAndAnimate();
+    }
+
+    /* --- 4. COPIE EMAIL & LIEN --- */
     const emailBtn = document.getElementById('copyEmail');
     const emailMsg = document.getElementById('copyMessage');
+    const shareBtn = document.getElementById('shareBtn');
+    const shareMsg = document.getElementById('shareMessage');
     const myEmail = "nathan07.bergeon@gmail.com";
 
     if (emailBtn) {
@@ -68,204 +206,39 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    const shareBtn = document.getElementById('shareBtn');
-    const shareMsg = document.getElementById('shareMessage');
-
-    if (shareBtn && shareMsg) {
+    if (shareBtn) {
         shareBtn.addEventListener('click', () => {
-            const siteUrl = window.location.href;
-            navigator.clipboard.writeText(siteUrl).then(() => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
                 shareMsg.classList.add('show');
-                setTimeout(() => {
-                    shareMsg.classList.remove('show');
-                }, 2000);
-            }).catch(err => {
-                console.error('Erreur lors de la copie du lien : ', err);
+                setTimeout(() => shareMsg.classList.remove('show'), 2000);
             });
         });
     }
-
-    function copyToClipboard(text, button) {
-        navigator.clipboard.writeText(text).then(() => {
-            const originalHTML = button.innerHTML;
-            button.classList.add('copied');
-            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Copié !';
-            setTimeout(() => {
-                button.classList.remove('copied');
-                button.innerHTML = originalHTML;
-            }, 2000);
-        }).catch(err => console.error('Erreur copie: ', err));
-    }
-});
-
-// Machine à écrire
-document.addEventListener('DOMContentLoaded', () => {
-    const textElement = document.getElementById('typewriter-dynamic');
-    const cursor = document.getElementById('cursor');
     
-    if (!textElement || !cursor) return; 
-
-    const phrases = ["une ligne à la fois."];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    let animationStarted = false;
-    let animationTimeout;
-
-    gsap.to(cursor, {
-        opacity: 0,
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5
-    });
-
-    function type() {
-        if (window.innerWidth <= 800) {
-            animationStarted = false;
-            return;
-        }
-
-        const currentPhrase = phrases[phraseIndex];
-
-        if (isDeleting) {
-            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
-            typingSpeed = 50;
-        } else {
-            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
-            typingSpeed = 100;
-        }
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            isDeleting = true;
-            typingSpeed = 2000;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typingSpeed = 500;
-        }
-
-        animationTimeout = setTimeout(type, typingSpeed);
-    }
-
-    function checkScreenAndAnimate() {
-        if (window.innerWidth <= 800) {
-            clearTimeout(animationTimeout);
-            textElement.textContent = phrases[0];
-            cursor.style.display = 'none';
-            animationStarted = false;
-        } else {
-            cursor.style.display = 'inline-block';
-            if (!animationStarted) {
-                charIndex = 0;
-                phraseIndex = 0;
-                isDeleting = false;
-                animationStarted = true;
-                type();
-            }
-        }
-    }
-
-    window.addEventListener('resize', checkScreenAndAnimate);
-    checkScreenAndAnimate();
-});
-
-// --- SYSTÈME DE NOTIFICATION DISCORD ET MODAL ---
-const DISCORD_URL = "https://discordapp.com/api/webhooks/1465838008958980128/BYgFcckr5DD_TnGw3nSRC-C5P0h9qfulOZ5lX_msCKTrLvbckof1lFq51lQNNNSZyse7";
-
-async function notifyDiscord(message) {
-    try {
-        await fetch(DISCORD_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content: message })
-        });
-    } catch (e) { console.error("Erreur Discord:", e); }
-}
-
-window.addEventListener('load', () => {
-    // Éléments du nouveau modal
-    const modal = document.getElementById('profile-modal');
-    const profileTrigger = document.getElementById('profileTrigger');
-    const closeBtn = document.getElementById('close-modal-btn');
-    const nameInput = document.getElementById('user-name-input');
-    const cards = document.querySelectorAll('.profile-card');
+    /* --- 5. MENU MOBILE --- */
+    const menuCheckbox = document.getElementById('menuCheckbox');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const header = document.querySelector('header');
     
-    const storageKey = 'nathan_portfolio_user';
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    let savedUser = JSON.parse(localStorage.getItem(storageKey));
-
-    // FONCTION : Ouvrir le modal
-    function openModal() {
-        if(modal) modal.style.display = 'flex';
-        // Pré-remplir si existe
-        if (savedUser && nameInput) {
-            nameInput.value = savedUser.name;
-        }
-    }
-
-    // FONCTION : Fermer le modal
-    function closeModal() {
-        if(modal) modal.style.display = 'none';
-    }
-
-    // 1. Gestion de l'ouverture automatique ou manuelle
-    if (!savedUser) {
-        // Premier visiteur : on ouvre le modal
-        setTimeout(openModal, 1000); 
-    } else {
-        // Visiteur connu : notification retour
-        savedUser.visits += 1;
-        localStorage.setItem(storageKey, JSON.stringify(savedUser));
-        notifyDiscord(`🔄 **RETOUR**\n👤 **${savedUser.name}** (${savedUser.type})\n🔢 **Visite n°** : ${savedUser.visits}\n📍 **Page** : \`${currentPage}\``);
-    }
-
-    // Bouton Header pour changer de profil
-    if (profileTrigger) {
-        profileTrigger.addEventListener('click', openModal);
-    }
-
-    // Bouton Fermer
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-    }
-
-    // Clic sur une carte de profil
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const type = card.getAttribute('data-type');
-            const name = nameInput.value.trim() || "Anonyme";
-            
-            // Mise à jour ou création user
-            const userData = { 
-                name: name, 
-                type: type, 
-                visits: savedUser ? savedUser.visits : 1 
-            };
-            
-            localStorage.setItem(storageKey, JSON.stringify(userData));
-            savedUser = userData; // Mettre à jour la var locale
-
-            closeModal();
-
-            // Notification Discord adaptée
-            const emoji = type === "Ecole" ? "🎓" : (type === "Entreprise" ? "💼" : "👋");
-            notifyDiscord(`🚀 **PROFIL DÉFINI**\n👤 **Nom** : ${name}\n${emoji} **Type** : ${type}\n📄 **Page** : \`${currentPage}\``);
-        });
-    });
-
-    // Suivi de navigation
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            const target = link.getAttribute('href');
-            const user = JSON.parse(localStorage.getItem(storageKey)) || { name: "Inconnu" };
-            if (target && !target.startsWith('http') && target !== "#") {
-                notifyDiscord(`👀 **NAVIGATION** : **${user.name}** va vers \`${target}\``);
+    if(menuCheckbox) {
+        menuCheckbox.addEventListener('change', () => {
+            if(menuCheckbox.checked) {
+                mobileMenu.classList.add('open');
+                header.classList.add('nav-active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('open');
+                header.classList.remove('nav-active');
+                document.body.style.overflow = '';
             }
         });
-    });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuCheckbox.checked = false;
+                mobileMenu.classList.remove('open');
+                header.classList.remove('nav-active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
 });

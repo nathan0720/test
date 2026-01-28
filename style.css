@@ -117,6 +117,13 @@ header.nav-active {
     color: var(--accent-blue);
 }
 
+/* --- Groupe Navigation & Actions (Ajouté) --- */
+.nav-action-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Espace entre le menu et l'icône */
+}
+
 .desktop-nav ul {
     display: flex;
     gap: 2.5rem;
@@ -134,35 +141,38 @@ header.nav-active {
     opacity: 1;
 }
 
-/* === HEADER ACTIONS (Icone Profile + Burger) === */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
+/* --- Bouton Profil (Ajouté) --- */
 .profile-btn {
     background: transparent;
-    border: none;
+    border: 2px solid transparent; 
+    color: var(--accent-blue);
     cursor: pointer;
-    color: var(--text-main);
-    width: 40px;
-    height: 40px;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .profile-btn:hover {
-    background: rgba(255,255,255,0.1);
-    transform: rotate(15deg);
+    background: rgba(96, 165, 250, 0.1);
+    transform: scale(1.1);
 }
 
 .profile-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* --- Carte Profil Modal (Ajouté) --- */
+.profile-card.selected {
+    border-color: var(--accent-blue);
+    background: rgba(96, 165, 250, 0.15);
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
 }
 
 /* === MENU MOBILE === */
@@ -759,7 +769,7 @@ header.nav-active {
     text-decoration: underline;
 }
 
-/* = 7. DÉTAIL PROJET = */
+/* = 7. DÉTAIL PROJET (Microbit, Turtel, Sucette) = */
 
 .project-hero {
     position: relative;
@@ -1185,7 +1195,7 @@ iframe {
     color: #fff;
 }
 
-/* = 9. creation en cour = */
+/* = 9.creation en cour = */
 
 .creation-container {
     flex: 1;
@@ -1283,6 +1293,161 @@ iframe {
     .spinner div:nth-of-type(6) { transform: translateZ(40px); }
 }
 
+.nav-action-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* --- Bouton Profil (Ajouté) --- */
+.profile-btn {
+    background: transparent;
+    border: 2px solid transparent; 
+    color: var(--accent-blue);
+    cursor: pointer;
+    padding: 6px; /* Un peu plus d'espace */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.profile-btn:hover {
+    background: rgba(96, 165, 250, 0.2);
+    transform: scale(1.1);
+}
+
+.profile-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Animation pour attirer l'attention si pas configuré */
+@keyframes pulse-blue {
+    0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(96, 165, 250, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+}
+
+.profile-btn.needs-setup {
+    animation: pulse-blue 2s infinite;
+}
+
+.profile-btn:hover {
+    background: rgba(96, 165, 250, 0.1);
+    transform: scale(1.1);
+}
+
+.profile-btn svg {
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* --- Modal Style --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: none; /* Caché par défaut, géré par JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 24px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative; /* <--- AJOUTE CETTE LIGNE ABSOLUMENT */
+}
+
+.modal-header h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+.modal-header p { color: #999; margin-bottom: 1.5rem; }
+
+.modal-input {
+    width: 100%;
+    padding: 12px;
+    margin: 1.5rem 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 8px;
+    outline: none;
+}
+
+.modal-input:focus { border-color: var(--accent-blue); }
+
+.modal-close-x {
+    position: absolute;
+    top: 15px;    /* Distance depuis le haut de la zone grise */
+    right: 20px;  /* Distance depuis la droite de la zone grise */
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.modal-close-x:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.profile-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.profile-card {
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-card:hover, .profile-card.selected {
+    border-color: var(--accent-blue);
+    background: rgba(96, 165, 250, 0.1);
+}
+
+/* Carte sélectionnée */
+.profile-card.selected {
+    border-color: var(--accent-blue);
+    background: rgba(96, 165, 250, 0.15);
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+}
+
+.card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.profile-card h4 { font-size: 0.9rem; margin-bottom: 0.2rem; color: #fff; }
+.profile-card p { font-size: 0.75rem; color: #888; }
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* = 10. FOOTER = */
 
 footer {
@@ -1295,132 +1460,18 @@ footer {
     width: 100%;
 }
 
-/* = 11. MODAL PROFILE (NOUVEAU) = */
-
-.modal-overlay {
-    display: none; /* Caché par défaut */
-    position: fixed;
-    top: 0; 
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2000;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal-glass {
-    background: rgba(20, 20, 20, 0.85);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 2rem;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 100%;
-    text-align: center;
-    transform: scale(0.95);
-    animation: slideUp 0.3s ease forwards;
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: scale(0.95) translateY(20px); } to { transform: scale(1) translateY(0); } }
-
-.modal-header h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-main);
-}
-
-.modal-header p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-}
-
-.modal-input {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    color: white;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.modal-input:focus {
-    outline: none;
-    border-color: var(--accent-blue);
-    background: rgba(255,255,255,0.1);
-}
-
-.profile-cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.profile-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 15px 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.profile-card:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: var(--accent-blue);
-    transform: translateY(-3px);
-}
-
-.card-icon {
-    font-size: 2rem;
-}
-
-.profile-card h4 {
-    font-size: 0.9rem;
-    color: var(--text-main);
-}
-
-.profile-card p {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.2;
-}
-
-.text-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.text-btn:hover { color: var(--text-main); }
-
-
-/* = 12. RESPONSIVE (MOBILE) = */
+/* = 11. RESPONSIVE (MOBILE) = */
 
 @media (max-width: 800px) {
+    .nav-action-group {
+        gap: 1rem;
+        margin-right: 1rem;
+    }
+    
     .desktop-nav {
         display: none;
     }
-    /* Afficher le nouveau hamburger */
+    
     .hamburger {
         display: block;
     }
@@ -1504,11 +1555,6 @@ footer {
         border-color: #333;
     }
     
-    .timeline-content {
-        transform: none;
-        border-color: #333;
-    }
-
     .image-card:hover {
         transform: none;
     }
@@ -1568,16 +1614,6 @@ footer {
     .social-bubble-wrapper {
         justify-content: center;
         width: 100%;
-    }
-
-    /* Modal Mobile Adaptation */
-    .profile-cards-container {
-        grid-template-columns: 1fr; /* Cartes verticales sur mobile */
-        gap: 10px;
-    }
-    .profile-card {
-        flex-direction: row;
-        padding: 15px;
     }
 }
 

@@ -218,9 +218,10 @@ header.nav-active {
 
 .hamburger {
     cursor: pointer;
-    display: none; /* Masqué sur desktop */
+    display: none; /* Caché sur desktop */
     z-index: 1002;
-    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    user-select: none;
 }
 
 .hamburger input {
@@ -234,7 +235,7 @@ header.nav-active {
 
 .line {
     fill: none;
-    stroke: var(--text-main);
+    stroke: white; /* Couleur des lignes */
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 3;
@@ -1365,14 +1366,14 @@ iframe {
 }
 
 .modal-glass {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2.5rem;
+    background: #111;
+    border: 1px solid #333;
+    padding: 2.5rem 1.5rem;
     border-radius: 24px;
-    max-width: 500px;
     width: 90%;
+    max-width: 450px;
+    position: relative;
     text-align: center;
-    position: relative; /* <--- AJOUTE CETTE LIGNE ABSOLUMENT */
 }
 
 .modal-header h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
@@ -1393,35 +1394,33 @@ iframe {
 
 .modal-close-x {
     position: absolute;
-    top: 15px;    /* Distance depuis le haut de la zone grise */
-    right: 20px;  /* Distance depuis la droite de la zone grise */
+    top: 15px;
+    right: 20px;
     background: none;
     border: none;
     color: #666;
     font-size: 1.8rem;
     cursor: pointer;
     line-height: 1;
-    transition: all 0.2s;
 }
 
-.modal-close-x:hover {
-    color: #fff;
-    transform: scale(1.1);
-}
+.modal-close-x:hover { color: #fff; }
 
 .profile-cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
 }
 
 .profile-card {
-    padding: 15px;
-    border: 1px solid var(--border-color);
+    flex: 1;
+    background: #1a1a1a;
+    padding: 1.2rem 0.5rem;
     border-radius: 12px;
-    cursor: pointer;
+    border: 2px solid transparent;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .profile-card:hover, .profile-card.selected {

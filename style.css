@@ -229,13 +229,13 @@ header.nav-active {
 }
 
 .hamburger svg {
-    height: 3em;
+    height: 3em; /* Taille précise pour l'animation */
     transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .line {
     fill: none;
-    stroke: white; /* Couleur des lignes */
+    stroke: var(--text-main);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 3;
@@ -244,7 +244,7 @@ header.nav-active {
 }
 
 .line-top-bottom {
-    stroke-dasharray: 12 63;
+    stroke-dasharray: 12 63; 
 }
 
 .hamburger input:checked + svg {
@@ -1398,13 +1398,18 @@ iframe {
     right: 20px;
     background: none;
     border: none;
-    color: #666;
-    font-size: 1.8rem;
+    color: var(--text-muted);
+    font-size: 2rem;
     cursor: pointer;
     line-height: 1;
+    z-index: 101;
+    transition: color 0.3s, transform 0.2s;
 }
 
-.modal-close-x:hover { color: #fff; }
+.modal-close-x:hover {
+    color: white;
+    transform: scale(1.1);
+}
 
 .profile-cards-container {
     display: flex;
@@ -1434,6 +1439,8 @@ iframe {
     background: rgba(96, 165, 250, 0.15);
     box-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
 }
+
+
 
 .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 .profile-card h4 { font-size: 0.9rem; margin-bottom: 0.2rem; color: #fff; }
@@ -1614,22 +1621,65 @@ footer {
         justify-content: center;
         width: 100%;
     }
+    
+    .modal-glass {
+        padding: 3rem 1.5rem 2rem 1.5rem; /* Plus d'espace en haut pour la croix */
+        width: 95%;
+    }
+
     .profile-cards-container {
-        flex-direction: column; /* Les cartes se mettent les unes sous les autres */
+        flex-direction: column; /* On empile les cases */
+        gap: 12px;
+        max-height: 60vh; /* Évite que ça sorte de l'écran */
+        overflow-y: auto; /* Permet de scroller dans la modal si besoin */
     }
 
     .profile-card {
         width: 100%;
         display: flex;
         align-items: center;
-        gap: 15px;
         text-align: left;
-        padding: 1rem;
+        padding: 15px;
+        gap: 15px;
     }
 
     .card-icon {
-        margin-bottom: 0; /* Aligne l'icône avec le texte sur mobile */
-        font-size: 1.2rem;
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    .nav-action-group {
+        gap: 1rem;
+        margin-right: 4rem; /* Créer un espace de sécurité pour la croix */
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* On crée un groupe pour l'icône + le hamburger à droite */
+    .right-actions-mobile {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espace entre la main et le hamburger */
+    }
+
+    /* On s'assure que l'icône de profil est visible sur mobile */
+    .profile-btn {
+        display: flex !important; /* Force l'affichage */
+        order: 1; /* Positionne avant le hamburger si besoin */
+    }
+
+    .hamburger {
+        display: block; /* Déjà présent dans votre code */
+        order: 2;
+    }
+    
+    /* On cache le reste du groupe desktop qui ne doit pas apparaître */
+    .desktop-nav {
+        display: none;
     }
 }
 
@@ -1644,5 +1694,66 @@ footer {
 
     .texte-simulateur {
         display: none;
+    }
+}
+
+/* --- SUR GRAND ÉCRAN (Desktop) --- */
+@media (min-width: 769px) {
+    .desktop-nav {
+        display: block; /* Affiche le menu Accueil, Projets, etc. */
+    }
+
+    .hamburger {
+        display: none; /* Cache le hamburger sur PC */
+    }
+
+    /* Optionnel : Si vous voulez aussi la main sur PC à droite du menu */
+    .right-actions-mobile {
+        display: flex;
+    }
+}
+
+/* --- Structure globale du Header --- */
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Logo à gauche, reste à droite */
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Le wrapper qui contient menu + main + hamburger */
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Espace entre le texte (Contact) et la main */
+}
+
+.right-actions-mobile {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espace entre la main et le hamburger */
+}
+
+/* --- Adaptations Mobile --- */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none; /* Cache le texte sur mobile */
+    }
+    
+    .nav-wrapper {
+        gap: 0; /* Plus besoin d'espace puisque le menu est caché */
+    }
+
+    .right-actions-mobile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-btn {
+        display: flex !important;
     }
 }

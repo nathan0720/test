@@ -123,11 +123,20 @@ document.addEventListener('DOMContentLoaded', () => {
             userAgent: navigator.userAgent
         };
         // Google Sheets
+        // Dans la fonction sendAnalytics...
+
+        // Google Sheets
         if(GOOGLE_SCRIPT_URL.includes("script.google.com")) {
+            // On utilise 'application/x-www-form-urlencoded' ou 'text/plain' pour passer le no-cors plus facilement
             fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST", mode: "no-cors", 
-                headers: { "Content-Type": "application/json" },
+                method: "POST", 
+                mode: "no-cors", 
+                headers: { 
+                    "Content-Type": "text/plain;charset=utf-8" 
+                },
                 body: JSON.stringify(data)
+            }).then(() => {
+                console.log("Données envoyées à Google Sheets");
             }).catch(e => console.error("Erreur Sheets", e));
         }
         // Discord

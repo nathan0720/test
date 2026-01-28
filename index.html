@@ -17,7 +17,7 @@
         <div class="header-container">
             <div class="logo"><a href="index.html">Nathan BERGEON</a></div>
             
-            <div class="nav-action-group">
+            <div class="nav-wrapper">
                 <nav class="desktop-nav">
                     <ul>
                         <li><a href="index.html" class="active-link">Accueil</a></li>
@@ -27,18 +27,19 @@
                     </ul>
                 </nav>
 
-                <button id="profileTrigger" class="profile-btn" title="Mon Profil" aria-label="Choisir mon profil">
-                    </button>
-            </div>
+                <div class="right-actions-mobile">
+                    <button id="profileTrigger" class="profile-btn" title="Mon Profil">
+                        </button>
 
-            <label class="hamburger" id="hamburgerLabel">
-                <input type="checkbox" id="menuCheckbox" />
-                <svg viewBox="0 0 32 32">
-                    <path class="line line-top-bottom" d="M27 10 13 10C10 10 10 10 13 10C16 10 16 10 13 10C10 10 10 10 13 10C16 10 16 10 13 10C10 10 10 10 13 10C16 10 16 10 13 10C10 10 10 10 13 10C16 10 16 10 13 10C10 10 10 10 13 10C16 10 16 10 13 10C10 10 10 10 13 10L27 24" />
-                    <path class="line" d="M27 16 26 16" />
-                    <path class="line line-top-bottom" d="M27 22 13 22C10 22 10 22 13 22C16 22 16 22 13 22C10 22 10 22 13 22C16 22 16 22 13 22C16 22 16 22 13 22C10 22 10 22 13 22C16 22 16 22 13 22L27 8" />
-                </svg>
-            </label>
+                    <label class="hamburger" id="hamburgerLabel">
+                        <input type="checkbox" id="menuCheckbox" />
+                        <svg viewBox="0 0 32 32">
+                            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                            <path class="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -120,8 +121,8 @@
             <button id="close-modal-x" class="modal-close-x" aria-label="Fermer">×</button>
 
             <div class="modal-header">
-                <h3>Personnalisation</h3>
-                <p>Identifiez-vous pour une meilleure expérience.</p>
+                <h3>Bonjour et bienvenue.</h3>
+                <p>Voici mon portfolio. Identifiez-vous pour me faire part de votre venue.</p>
             </div>
             
             <input type="text" id="user-name-input" class="modal-input" placeholder="Votre nom ou entreprise" autocomplete="off">

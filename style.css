@@ -1732,28 +1732,29 @@ footer {
 }
 
 .right-actions-mobile {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center;
-    gap: 15px; /* Espace entre la main et le hamburger */
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: nowrap; 
 }
 
-/* --- Adaptations Mobile --- */
 @media (max-width: 768px) {
-    .desktop-nav {
-        display: none; /* Cache le texte sur mobile */
-    }
-    
-    .nav-wrapper {
-        gap: 0; /* Plus besoin d'espace puisque le menu est caché */
-    }
-
-    .right-actions-mobile {
+    .header-container {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 10px;
+        flex-wrap: nowrap; /* Garde le logo à gauche et le reste à droite */
     }
 
+    .desktop-nav {
+        display: none; /* On cache bien le texte Accueil, Projets... */
+    }
+
+    /* On s'assure que le bouton de profil ne rétrécit pas */
     .profile-btn {
+        flex-shrink: 0; 
         display: flex !important;
     }
 }

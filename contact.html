@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Nathan Bergeon - Contact</title>
+    <link rel="icon" type="image/gif" href="./images/icon_page.gif" />
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Nathan BERGEON</a></div>
+            
+            <div class="nav-wrapper">
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chronologie.html">Chronologie</a></li>
+                        <li><a href="projets.html">Projets</a></li>
+                        <li><a href="contact.html"class="active-link">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="right-actions-mobile">
+                    <button id="profileTrigger" class="profile-btn" title="Mon Profil">
+                        </button>
+
+                    <label class="hamburger" id="hamburgerLabel">
+                        <input type="checkbox" id="menuCheckbox" />
+                        <svg viewBox="0 0 32 32">
+                            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                            <path class="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Accueil</a>
+        <a href="chronologie.html">Chronologie</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+
+    <div class="container">
+        <div class="page-title"> 
+            <h1>Me Contacter</h1>
+            <p>Une question ou une opportunité ? N'hésitez pas à m'envoyer un message.</p>
+        </div>
+
+        <div class="contact-grid-layout">
+            
+            <div class="contact-info-box">
+                <h3>Mes Coordonnées</h3> <p class="info-intro"></p>
+                
+                <div class="info-item">
+                    <span class="info-icon">📧</span>
+                    <div>
+                        <span class="info-label">Email</span>
+                        <p class="info-value">
+                            <a href="mailto:nathan.bergeon@gmail.com" target="_blank">
+                                nathan07.bergeon@gmail.com
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div>
+                        <span class="info-label">Localisation</span>
+                        <p class="info-value">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Menucourt+95180+France" target="_blank">Menucourt 95180, France</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-box">
+                <form action="https://formspree.io/f/mrbdyage" method="POST">
+                    <div class="form-group">
+                        <label for="nom">Nom*</label>
+                        <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" placeholder="Votre Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet*</label>
+                        <input type="text" id="subject" name="subject" placeholder="Le sujet de votre message" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message*</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Votre message ici..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Envoyer le message</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© Nathan Bergeon. Tous droits réservés.</p>
+    </footer>
+
+    <div id="profile-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-glass">
+            <button id="close-modal-x" class="modal-close-x" aria-label="Fermer">×</button>
+
+            <div class="modal-header">
+                <h3>Bonjour et bienvenue.</h3>
+                <p>Voici mon portfolio. Identifiez-vous pour me faire part de votre venue.</p>
+            </div>
+            
+            <input type="text" id="user-name-input" class="modal-input" placeholder="Votre nom ou entreprise" autocomplete="off">
+
+            <div class="profile-cards-container">
+                <div class="profile-card" data-type="Curieux">
+                    <div class="card-icon">👋</div>
+                    <h4>Curieux</h4>
+                    <p>Découverte</p>
+                </div>
+                
+                <div class="profile-card" data-type="Ecole">
+                    <div class="card-icon">🎓</div>
+                    <h4>École</h4>
+                    <p>Académique</p>
+                </div>
+
+                <div class="profile-card" data-type="Entreprise">
+                    <div class="card-icon">💼</div>
+                    <h4>Recruteur</h4>
+                    <p>Professionnel</p>
+                </div>
+            </div>
+            
+            <button id="save-profile-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">Enregistrer</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

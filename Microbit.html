@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets Python Micro:bit - Nathan Bergeon</title>
+    <link rel="icon" type="image/gif" href="./images/icon_page.gif" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Nathan BERGEON</a></div>
+            
+            <div class="nav-wrapper">
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chronologie.html">Chronologie</a></li>
+                        <li><a href="projets.html"class="active-link">Projets</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="right-actions-mobile">
+                    <button id="profileTrigger" class="profile-btn" title="Mon Profil">
+                        </button>
+
+                    <label class="hamburger" id="hamburgerLabel">
+                        <input type="checkbox" id="menuCheckbox" />
+                        <svg viewBox="0 0 32 32">
+                            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                            <path class="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Accueil</a>
+        <a href="chronologie.html">Chronologie</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+
+
+    <section class="project-hero" style="background-image: url('./images/logo_microbit_maqueen.jpg');">
+        <div class="project-hero-overlay"></div>
+        <div class="container project-hero-content">
+            <a href="projets.html" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Retour aux projets
+            </a>
+            
+            <h1>Micro:bit</h1>
+
+            <div class="project-meta-badges">
+                <span class="meta-badge type">EMBARQUÉ</span>
+                <span class="meta-badge date"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 2025</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container project-layout">
+        
+        <main class="project-main-content">
+            
+            <div class="project-section">
+                <h2 class="section-title">À propos du projet</h2>
+                <p>
+                    Lors de ma terminale au lycée, j’ai eu l’opportunité de réaliser un projet en NSI autour de la robotique en utilisant la carte Micro:bit et le robot Maqueen. Ce projet m’a permis de découvrir l’électronique, la programmation et la logique de contrôle des robots de manière ludique et pédagogique. L’objectif est de programmer des robots pour qu’ils effectuent des tâches simples mais concrètes, en utilisant différents capteurs intégrés.
+                </p>
+            </div>
+
+            <div class="challenge-box" id="defis-liste">
+                <h3 class="challenge-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Défis Techniques
+                </h3>
+                <p><a href="#projet-1" class="challenge-link">Projet 1 - Le robot suit une ligne noire</a></p>
+                <p><a href="#projet-2" class="challenge-link">Projet 2 - Le robot détecte les obstacles</a></p>
+                <p><a href="#projet-3" class="challenge-link">Projet 3 - Le robot se déplace de façon autonome dans la classe</a></p>
+            </div>
+
+            <div class="project-section" id="projet-1">
+                <div class="code-header">
+                    <h2 class="section-title"><a href="#defis-liste" class="back-to-top-link">Projet 1 - Le robot suit une ligne noire</a></h2>
+                    <button class="copy-btn" data-target="code-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                <pre id="code-1" class="code-block">
+from microbit import *
+
+""" Maqueen robot """
+
+# 0x10 = hexadécimal adresse communication robot
+# protocole I2c
+def avance():
+    # moteur gauche avance
+    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
+    # moteur droit avance
+    i2c.write(0x10, bytearray([0x02, 0x0, 100]))
+
+def recule():
+    # moteur gauche recule
+    i2c.write(0x10, bytearray([0x00, 0x1, 100]))
+    # moteur droit recule
+    i2c.write(0x10, bytearray([0x02, 0x1, 100]))
+
+def gauche():
+    # moteur gauche stop
+    i2c.write(0x10, bytearray([0x00, 0x0, 0]))
+    # moteur droit avance
+    i2c.write(0x10, bytearray([0x02, 0x0, 100]))
+
+def droite():
+    # moteur gauche avance
+    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
+    # moteur droit stop
+    i2c.write(0x10, bytearray([0x02, 0x0, 0]))
+
+def stop():
+    # moteur gauche stop
+    i2c.write(0x10, bytearray([0x00, 0, 0]))
+    # moteur droit stop
+    i2c.write(0x10, bytearray([0x02, 0, 0]))
+
+def demitour():
+    # moteur gauche avance
+    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
+    # moteur droit recule
+    i2c.write(0x10, bytearray([0x02, 0x1, 100]))
+   
+# On commence à avancer
+avance()
+
+# On attend que l'un des deux capteurs détecte du noir (valeur 0)
+# Tant que le capteur gauche ET le capteur droit voient du blanc (1), on ne fait rien
+while pin13.read_digital() == 1 and pin14.read_digital() == 1:
+    sleep(10) # Petite pause pour laisser le processeur respirer
+
+# Une fois qu'on a détecté du noir, on entre dans la boucle principale
+while True:
+    # Votre logique de suivi de ligne habituelle
+    pin8.write_digital(pin13.read_digital())
+    pin12.write_digital(pin14.read_digital())
+    
+    if pin14.read_digital() == 1 and pin13.read_digital() == 1:
+        demitour()
+    elif pin14.read_digital() == 0 and pin13.read_digital() == 1:
+        droite()
+    elif pin14.read_digital() == 1 and pin13.read_digital() == 0:
+        gauche()
+    else:
+        avance()
+</pre>
+<br>
+                <div class="simulateur-iframe">
+                <p>
+                    Lancer le simulateur avec le bouton run <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg>
+                </p>
+                
+            <iframe width='100%' height=1520 allowfullscreen frameborder='0' style='border:1px #d6d6d6 solid;' allow="fullscreen *; microphone *; camera *; serial *; usb *; encrypted-media *" src="https://fr.vittascience.com/microbit/?link=6923483141060&mode=codeOnly"></iframe>
+            </div>
+            </div>
+
+            <div class="project-section" id="projet-2">
+                <div class="code-header">
+                    <h2 class="section-title"><a href="#defis-liste" class="back-to-top-link">Projet 2 - Le robot détecte les obstacles</a></h2>
+                    <button class="copy-btn" data-target="code-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                <pre id="code-2" class="code-block">
+from microbit import *
+import machine
+from neopixel import NeoPixel
+
+# MOTEURS
+def moteur_gauche(sens, vitesse):
+    i2c.write(0x10, bytearray([0x00, sens, vitesse]))
+
+def moteur_droite(sens, vitesse):
+    i2c.write(0x10, bytearray([0x02, sens, vitesse]))
+
+def avance():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 100)
+
+def stop():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 0)
+
+# DISTANCE
+
+def distance()->float:
+    pin1.write_digital(1)
+    pin1.write_digital(0)
+    pin2.read_digital()
+    delai = machine.time_pulse_us(pin2, 1)
+    return delai * 34 / 2000
+
+# LEDs
+
+np = NeoPixel(pin15, 4)
+
+def set_leds(color):
+    for i in range(4):
+        np[i] = color
+    np.show()
+
+# PARAMÈTRES
+
+seuil = 30  # distance seuil
+
+# BOUCLE PRINCIPALE
+
+while True:
+    dist = distance()
+
+    if 0 < dist < seuil:
+        # Obstacle détecté → stop + LEDs rouges
+        stop()
+        set_leds((255, 0, 0))
+    else:
+        # Pas d'obstacle → avance + LEDs blanches
+        avance()
+        set_leds((255, 255, 255))
+
+    sleep(50)
+                </pre>
+            </div>
+
+            <div class="project-section" id="projet-3">
+                <div class="code-header">
+                    <h2 class="section-title"><a href="#defis-liste" class="back-to-top-link">Projet 3 - Le robot se déplace de façon autonome</a></h2>
+                    <button class="copy-btn" data-target="code-3-robot">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                <p>Carte Robot</p>
+                <pre id="code-3-robot" class="code-block">
+from microbit import *
+import machine
+import time
+from neopixel import NeoPixel
+import radio
+
+# MOTEURS
+
+def moteur_gauche(sens, vitesse):
+    i2c.write(0x10, bytearray([0x00, sens, vitesse]))
+
+def moteur_droite(sens, vitesse):
+    i2c.write(0x10, bytearray([0x02, sens, vitesse]))
+
+def avance():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 100)
+
+def recule():
+    moteur_gauche(1, 100)
+    moteur_droite(1, 100)
+
+def gauche():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 100)
+
+def droite():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 0)
+
+def stop():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 0)
+
+
+# DISTANCE
+
+def distance()->float:
+    pin1.write_digital(1)
+    pin1.write_digital(0)
+    pin2.read_digital()
+    delai = machine.time_pulse_us(pin2, 1)
+    return delai * 34 / 2000
+
+
+# LEDS
+
+def set_leds(color):
+    for i in range(4):
+        np[i] = color
+    np.show()
+
+
+# OBSTACLE
+
+def obstacle():
+    stop()
+    sleep(100)
+    recule()
+    sleep(300)
+    stop()
+    sleep(100)
+    droite()
+    sleep(400)
+    stop()
+    sleep(100)
+
+
+# INITIALISATION
+
+radio.on()
+radio.config(channel=12)
+
+np = NeoPixel(pin15, 4)
+seuil = 30
+auto = True  # mode AUTO au démarrage
+
+r = 0
+v = 255
+
+
+# MODE AUTOMATIQUE
+
+def mode_auto():
+    global auto, r, v
+
+    dist = distance()
+
+    if 0 < dist < seuil:
+
+        bloque = True
+
+        for essai in range(5):
+
+            # LEDs : dégradé vert->rouge
+            set_leds((r, v, 0))
+
+            r = min(255, r + 50)
+            v = max(0, v - 50)
+
+            if distance() >= seuil:
+                bloque = False
+                break
+
+            obstacle()
+
+        if bloque:
+            auto = False
+            stop()
+
+    else:
+        # avance normale
+        r, v = 0, 255
+        avance()
+        set_leds((255, 255, 255))
+        sleep(20)
+
+
+# MODE MANUEL
+
+def mode_manuel():
+    msg = radio.receive()
+
+    # LEDs rouges
+    set_leds((255, 0, 0))
+
+    if msg == "AV":
+        avance()
+    elif msg == "RE":
+        recule()
+    elif msg == "GA":
+        gauche()
+    elif msg == "DR":
+        droite()
+    elif msg == "ST":
+        stop()
+
+
+#   BOUCLE PRINCIPALE
+
+while True:
+    if auto:
+        mode_auto()
+    else:
+        mode_manuel()
+</pre>
+
+<br>
+            <div class="project-section">
+                <div class="code-header">
+                    <p>Carte télécommande</p>
+                <button class="copy-btn" data-target="code-3-remote">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                
+                <pre id="code-3-remote" class="code-block">
+module radio
+
+from microbit import *
+import radio
+
+radio.on()
+radio.config(channel=12)
+
+while True:
+    msg = None
+
+    #COMMANDES PAR BOUTONS
+    if button_a.is_pressed() and button_b.is_pressed():
+        msg = "ST"  # stop
+    elif button_a.is_pressed():
+        msg = "GA"  # gauche
+    elif button_b.is_pressed():
+        msg = "DR"  # droite
+
+    # AVANCER / RECULER AVEC INCLINAISON
+    else:
+        y = accelerometer.get_y()
+
+        if y < -200:
+            msg = "AV"
+        elif y > 200:
+            msg = "RE"
+        else:
+            msg = "ST"
+
+    if msg:
+        radio.send(msg)
+
+    sleep(100)
+</pre>
+            </div>
+
+            <div class="project-section">
+                <h2 class="section-title">Documentation</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-album-icon lucide-album"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><polyline points="11 3 11 11 14 8 17 11 17 3"/></svg></div>
+                        <span><a href="https://python.microbit.org/v/3/reference" target="_blank" class="lien">Carte Micro:bit</a></span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-album-icon lucide-album"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><polyline points="11 3 11 11 14 8 17 11 17 3"/></svg></div>
+                        <span> <a href="https://python.microbit.org/v/3/reference" target="_blank" class="lien">Robot maqueen</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <h2 class="section-title">Capteurs carte micro:bit V2</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Accéléromètre 3 axes</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Magnétomètre / Boussole 3 axes</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de mouvement (dérivé de l’accéléromètre)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de température (du microcontrôleur, approximatif)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Microphone MEMS intégré (avec LED indicatrice)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de niveau sonore (analysé par la carte grâce au micro)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de toucher capacitif (bouton logo tactile)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>2 capteurs suiveurs de ligne infrarouge (IR)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>1 capteur de distance ultrason (HC-SR04 modifié)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de luminosité (via les LEDs de la matrice 5×5)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <h2 class="section-title">Capteurs Robot maqueen</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>2 capteurs suiveurs de ligne infrarouge (IR)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>1 capteur de distance ultrason (HC-SR04 modifié)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>Capteur de réception infrarouge (IR receiver) pour télécommande</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></div>
+                        <span>LED avant (pas un capteur, mais utile)</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="project-sidebar">
+            <div class="sidebar-box">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg> Technologies</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tag">#Micro:bit</span>
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <h4>Liens</h4>
+                <div class="sidebar-links">
+                    <a href="./Projets/Microbit/Projet_1/Projet_1_-_Le_robot_suit_une_ligne_noire.py" target="_blank" class="sidebar-btn">
+                        Télécharger Projet 1 (.py)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    <a href="./Projets/Microbit/Projet_2/Projet_2_-_Le_robot_détecte_les_obstacles.py" target="_blank" class="sidebar-btn">
+                        Télécharger Projet 2 (.py)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    <a href="./Projets/Microbit/Projet_3/Projet_3_-_Le_robot_se_déplace_de_façon_autonome_dans_la_classe_(module_radio).py" target="_blank" class="sidebar-btn">
+                        Télécharger Projet 3 (module_robot_maqueen) (.py)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                    <a href="./Projets/Microbit/Projet_3/Projet_3_-_Le_robot_se_déplace_de_façon_autonome_dans_la_classe_(module_radio).py" target="_blank" class="sidebar-btn">
+                        Télécharger Projet 3 (module_radio) (.py)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>                   
+                    <a href="Projets/Microbit.zip" download class="sidebar-btn secondary">
+                        Tout télécharger (.zip)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer>
+        <p>&copy; Nathan Bergeon. Tous droits réservés.</p>
+    </footer>
+
+<div id="profile-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-glass">
+            <button id="close-modal-x" class="modal-close-x" aria-label="Fermer">×</button>
+
+            <div class="modal-header">
+                <h3>Bonjour et bienvenue.</h3>
+                <p>Voici mon portfolio. Identifiez-vous pour me faire part de votre venue.</p>
+            </div>
+            
+            <input type="text" id="user-name-input" class="modal-input" placeholder="Votre nom ou entreprise" autocomplete="off">
+
+            <div class="profile-cards-container">
+                <div class="profile-card" data-type="Curieux">
+                    <div class="card-icon">👋</div>
+                    <h4>Curieux</h4>
+                    <p>Découverte</p>
+                </div>
+                
+                <div class="profile-card" data-type="Ecole">
+                    <div class="card-icon">🎓</div>
+                    <h4>École</h4>
+                    <p>Académique</p>
+                </div>
+
+                <div class="profile-card" data-type="Entreprise">
+                    <div class="card-icon">💼</div>
+                    <h4>Recruteur</h4>
+                    <p>Professionnel</p>
+                </div>
+            </div>
+            
+            <button id="save-profile-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">Enregistrer</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

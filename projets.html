@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nathan Bergeon - Projets</title>
+    <link rel="icon" type="image/gif" href="./images/icon_page.gif" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Nathan BERGEON</a></div>
+            
+            <div class="nav-wrapper">
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chronologie.html">Chronologie</a></li>
+                        <li><a href="projets.html"class="active-link">Projets</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="right-actions-mobile">
+                    <button id="profileTrigger" class="profile-btn" title="Mon Profil">
+                        </button>
+
+                    <label class="hamburger" id="hamburgerLabel">
+                        <input type="checkbox" id="menuCheckbox" />
+                        <svg viewBox="0 0 32 32">
+                            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                            <path class="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Accueil</a>
+        <a href="chronologie.html">Chronologie</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+
+    <div class="container projets-page">
+        <div class="page-title">
+            <h1>Mes Projets</h1>
+            <p>Une collection de mes travaux réalisés à la fois en cours et personnellement.</p>
+        </div>
+        <div class="projets-grid">
+            
+            <div class="project-card" style="--bg-url: url('./images/logo_microbit_maqueen.jpg');">
+                <span class="card-type">EMBARQUÉ</span>
+                <h3>Micro:bit</h3>
+                <p>Un projet embarqué utilisant un microcontrôleur Micro:bit avec de nombreux capteurs.</p>
+                <div class="tag-group">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#Micro:bit</span>
+                </div>
+                <div class="card-actions">
+                    <a href="Microbit.html" class="action-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Voir le projet</a>
+                </div>
+            </div>
+
+            <div class="project-card" style="--bg-url: url('./images/logo_turtel.jpg');">
+                <span class="card-type">GRAPHIQUE</span>
+                <h3>Turtel</h3>
+                <p>Un projet créatif et super visuel, pratique pour commencer avec python.</p>
+                <div class="tag-group">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#Turtel</span>
+                </div>
+                <div class="card-actions">
+                    <a href="turtel.html" class="action-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Voir le projet</a>
+                </div>
+            </div>
+
+            <div class="project-card" style="--bg-url: url('./images/logo_filius.jpg');">
+                <span class="card-type">RESEAU</span>
+                <h3>Filius réseau</h3>
+                <p>Un projet concret et super visuel</p>
+                <div class="tag-group">
+                    <span class="tag">#Filius</span>
+                    <span class="tag">#Schématisation</span>
+                </div>
+                <div class="card-actions">
+                    <a href="filius.html" class="action-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Voir le projet</a>
+                </div>
+            </div>
+
+            <div class="project-card" style="--bg-url: url('./images/logo_figma.jpg');">
+                <span class="card-type">DESIGN</span>
+                <h3>Figma</h3>
+                <p>Un projet pour poser les idées jusqu'a la maquette</p>
+                <div class="tag-group">
+                    <span class="tag">#Figma</span>
+                    <span class="tag">#Créativité</span>
+                </div>
+                <div class="card-actions">
+                    <a href="creation_en_cour.html" class="action-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Voir le projet</a>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+        
+    <footer>
+        <p>&copy; Nathan Bergeon. Tous droits réservés.</p>
+    </footer>
+
+
+<div id="profile-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-glass">
+            <button id="close-modal-x" class="modal-close-x" aria-label="Fermer">×</button>
+
+            <div class="modal-header">
+                <h3>Bonjour et bienvenue.</h3>
+                <p>Voici mon portfolio. Identifiez-vous pour me faire part de votre venue.</p>
+            </div>
+            
+            <input type="text" id="user-name-input" class="modal-input" placeholder="Votre nom ou entreprise" autocomplete="off">
+
+            <div class="profile-cards-container">
+                <div class="profile-card" data-type="Curieux">
+                    <div class="card-icon">👋</div>
+                    <h4>Curieux</h4>
+                    <p>Découverte</p>
+                </div>
+                
+                <div class="profile-card" data-type="Ecole">
+                    <div class="card-icon">🎓</div>
+                    <h4>École</h4>
+                    <p>Académique</p>
+                </div>
+
+                <div class="profile-card" data-type="Entreprise">
+                    <div class="card-icon">💼</div>
+                    <h4>Recruteur</h4>
+                    <p>Professionnel</p>
+                </div>
+            </div>
+            
+            <button id="save-profile-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">Enregistrer</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -2,252 +2,149 @@
 const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1465838008958980128/BYgFcckr5DD_TnGw3nSRC-C5P0h9qfulOZ5lX_msCKTrLvbckof1lFq51lQNNNSZyse7"; 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuQDx7FGROb-UsolVpdw4obYaTFk-Y6UP87Z9sfNfDVyWMAVgegpzB8sMk2GqQwQ3g/exec"; 
 
+/* = SYNCHRONISATION MULTI-APPAREILS = */
+// Si tu ouvres ton site avec ?user=TonNom, ça synchronise l'appareil
+const urlParams = new URLSearchParams(window.location.search);
+const userFromUrl = urlParams.get('user');
+if (userFromUrl) {
+    localStorage.setItem('userName', userFromUrl);
+    localStorage.setItem('userProfile', 'Synchronisé');
+}
+
 /* = ICONES SVG = */
 const ICONS = {
     defaut: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
     Ecole: `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>`,
     Entreprise: `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
-    Curieux: `<svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>` // Main (Hand Wave)
+    Curieux: `<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`
 };
 
-/* = LOGIQUE PRINCIPALE = */
-document.addEventListener('DOMContentLoaded', () => {
+/* = GESTION DU PROFIL (MODAL) = */
+const modal = document.getElementById('user-modal');
+const userNameInput = document.getElementById('user-name-input');
+const saveBtn = document.getElementById('save-profile-btn');
+const profileCards = document.querySelectorAll('.profile-card');
+const profileTrigger = document.getElementById('profile-trigger');
+const closeModalX = document.getElementById('close-modal-x');
 
-    /* --- 1. GESTION DU PROFIL & ANALYTICS --- */
-    const profileTrigger = document.getElementById('profileTrigger');
-    const modal = document.getElementById('profile-modal');
-    const closeXBtn = document.getElementById('close-modal-x'); // Croix
-    const saveBtn = document.getElementById('save-profile-btn'); // Bouton Enregistrer
-    const cards = document.querySelectorAll('.profile-card');
-    const nameInput = document.getElementById('user-name-input');
-    
-    const storageKey = 'nathan_portfolio_user';
-    
-    // Variables temporaires pour le choix en cours
-    let selectedType = null;
-    let savedUser = JSON.parse(localStorage.getItem(storageKey));
+let selectedType = null;
 
-    // Mettre à jour l'icône dans le header
-    function updateHeaderIcon(type) {
-        if(profileTrigger) {
-            profileTrigger.innerHTML = ICONS[type] || ICONS['defaut'];
-            // Si icône par défaut ou pas de type, pulse animation
-            if(!type || type === 'defaut') profileTrigger.classList.add('needs-setup');
-            else profileTrigger.classList.remove('needs-setup');
-        }
-    }
+// Ouvrir/Fermer
+if(profileTrigger) profileTrigger.addEventListener('click', () => modal.style.display = 'flex');
+if(closeModalX) closeModalX.addEventListener('click', () => modal.style.display = 'none');
 
-    // Gestion Ouverture/Fermeture
-    function openModal() { modal.style.display = 'flex'; }
-    function closeModal() { modal.style.display = 'none'; }
-
-    // Init
-    if (savedUser) {
-        updateHeaderIcon(savedUser.type);
-        selectedType = savedUser.type; // Pré-sélection
-        sendAnalytics(savedUser, "Visite (Retour)");
-    } else {
-        updateHeaderIcon('defaut');
-        setTimeout(openModal, 3000); // Auto-open
-        sendAnalytics({name: "Inconnu", type: "Non défini"}, "Nouvelle Visite");
-    }
-
-    // Ouvrir le modal au clic sur l'icône
-    profileTrigger.addEventListener('click', () => {
-        openModal();
-        if(savedUser) {
-            nameInput.value = savedUser.name || "";
-            // Surligner la carte déjà choisie
-            cards.forEach(c => c.classList.remove('selected'));
-            const currentCard = document.querySelector(`.profile-card[data-type="${savedUser.type}"]`);
-            if(currentCard) currentCard.classList.add('selected');
-        }
+// Sélection de carte
+profileCards.forEach(card => {
+    card.addEventListener('click', () => {
+        profileCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedType = card.dataset.type;
     });
+});
 
-    // 1. Choix d'une carte (juste visuel pour l'instant)
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            cards.forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedType = card.getAttribute('data-type');
-        });
+// Sauvegarder
+if(saveBtn) {
+    saveBtn.addEventListener('click', () => {
+        const name = userNameInput.value.trim();
+        if(!name || !selectedType) {
+            alert("Merci de saisir un nom et de choisir un profil.");
+            return;
+        }
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userProfile', selectedType);
+        modal.style.display = 'none';
+        updateProfileUI();
+        // Envoyer une notification immédiate après identification
+        sendDiscordVisitUpdate(true); 
     });
+}
 
-    // 2. Bouton ENREGISTRER (Action finale)
-    if(saveBtn) {
-        saveBtn.addEventListener('click', () => {
-            if(!selectedType) {
-                alert("Merci de sélectionner un profil (Curieux, École ou Recruteur)");
-                return;
-            }
-            const name = nameInput.value.trim() || "Anonyme";
-            
-            // Sauvegarde
-            savedUser = { name: name, type: selectedType, lastVisit: new Date().toISOString() };
-            localStorage.setItem(storageKey, JSON.stringify(savedUser));
+function updateProfileUI() {
+    const name = localStorage.getItem('userName');
+    const type = localStorage.getItem('userProfile');
+    const statusText = document.getElementById('profile-status-text');
+    const iconContainer = document.querySelector('.profile-trigger-icon');
 
-            // UI Updates
-            updateHeaderIcon(selectedType);
-            closeModal();
-
-            // Notif
-            sendAnalytics(savedUser, "Profil Mis à jour");
-        });
+    if(name && type && statusText) {
+        statusText.innerText = name;
+        if(iconContainer) iconContainer.innerHTML = ICONS[type] || ICONS.defaut;
     }
+}
 
-    // 3. Bouton CROIX (Fermer sans sauver + Pulse)
-    if(closeXBtn) {
-        closeXBtn.addEventListener('click', () => {
-            closeModal();
-            // Si pas d'utilisateur sauvé, on fait clignoter l'icone pour dire "eh oh config moi"
-            if(!savedUser) profileTrigger.classList.add('needs-setup');
-        });
-    }
+/* = SYSTÈME DE NOTIFICATIONS DISCORD INTELLIGENT = */
+function sendDiscordVisitUpdate(force = false) {
+    // 1. NE PAS ENVOYER SI L'ONGLET N'EST PAS VISIBLE (Correctif iPhone Chrome)
+    if (document.visibilityState !== 'visible') return;
 
-    // Fermer en cliquant en dehors
-    modal.addEventListener('click', (e) => {
-        if(e.target === modal) {
-            closeModal();
-            if(!savedUser) profileTrigger.classList.add('needs-setup');
-        }
-    });
+    // 2. NE PAS ENVOYER SI DÉJÀ FAIT DANS CETTE SESSION (Sauf si on vient de s'enregistrer)
+    const sessionKey = 'notified_' + window.location.pathname;
+    if (sessionStorage.getItem(sessionKey) && !force) return;
 
-    /* --- 2. FONCTIONS D'ENVOI (Analytics) --- */
-    function sendAnalytics(user, action) {
-        const currentPage = window.location.pathname.split("/").pop() || "index.html";
-        const data = {
-            name: user.name,
-            type: user.type,
-            page: currentPage,
-            action: action,
-            userAgent: navigator.userAgent
-        };
-        // Google Sheets
-        // Dans la fonction sendAnalytics...
+    const pageTitle = document.title;
+    const pageUrl = window.location.href;
+    const userProfile = localStorage.getItem('userProfile') || 'Non défini';
+    const userName = localStorage.getItem('userName') || 'Anonyme';
 
-        // Google Sheets
-        if(GOOGLE_SCRIPT_URL.includes("script.google.com")) {
-            // On utilise 'application/x-www-form-urlencoded' ou 'text/plain' pour passer le no-cors plus facilement
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST", 
-                mode: "no-cors", 
-                headers: { 
-                    "Content-Type": "text/plain;charset=utf-8" 
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                console.log("Données envoyées à Google Sheets");
-            }).catch(e => console.error("Erreur Sheets", e));
-        }
-        // Discord
-        if(DISCORD_WEBHOOK_URL.includes("discord")) {
-            const discordMsg = { content: `📊 **${action}**\n👤 **${user.name}** (${user.type})\n📍 ${currentPage}` };
-            fetch(DISCORD_WEBHOOK_URL, {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(discordMsg)
-            }).catch(e => console.error("Erreur Discord", e));
-        }
-    }
+    const data = {
+        embeds: [{
+            title: "👀 Nouvelle page consultée",
+            description: force ? "L'utilisateur vient de mettre à jour son profil !" : "Visite de page standard",
+            color: 0x3498db, 
+            fields: [
+                { name: "Page", value: pageTitle, inline: true },
+                { name: "Utilisateur", value: userName + " (" + userProfile + ")", inline: true },
+                { name: "Lien", value: pageUrl }
+            ],
+            timestamp: new Date()
+        }]
+    };
 
-    /* --- 3. MACHINE A ECRIRE (Restaurée) --- */
-    const textElement = document.getElementById('typewriter-dynamic');
-    const cursor = document.getElementById('cursor');
+    fetch(DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        sessionStorage.setItem(sessionKey, 'true');
+    })
+    .catch(err => console.error("Erreur Discord:", err));
+}
+
+/* = INITIALISATION ET ÉVÉNEMENTS = */
+window.addEventListener('load', () => {
+    updateProfileUI();
     
-    if (textElement && cursor) {
-        const phrases = ["une ligne à la fois."];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
-        let animationStarted = false;
-        let animationTimeout;
-
-        gsap.to(cursor, { opacity: 0, ease: "power2.inOut", repeat: -1, yoyo: true, duration: 0.5 });
-
-        function type() {
-            if (window.innerWidth <= 800) { animationStarted = false; return; }
-            const currentPhrase = phrases[phraseIndex];
-            
-            if (isDeleting) {
-                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--; typingSpeed = 50;
-            } else {
-                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++; typingSpeed = 100;
-            }
-
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                isDeleting = true; typingSpeed = 2000;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typingSpeed = 500;
-            }
-            animationTimeout = setTimeout(type, typingSpeed);
-        }
-
-        function checkScreenAndAnimate() {
-            if (window.innerWidth <= 800) {
-                clearTimeout(animationTimeout); textElement.textContent = phrases[0];
-                cursor.style.display = 'none'; animationStarted = false;
-            } else {
-                cursor.style.display = 'inline-block';
-                if (!animationStarted) {
-                    charIndex = 0; phraseIndex = 0; isDeleting = false;
-                    animationStarted = true; type();
-                }
-            }
-        }
-        window.addEventListener('resize', checkScreenAndAnimate);
-        checkScreenAndAnimate();
+    // Vérifier si c'est la première fois pour ouvrir le modal
+    if(!localStorage.getItem('userName')) {
+        setTimeout(() => {
+            if(modal) modal.style.display = 'flex';
+        }, 2000);
     }
 
-    /* --- 4. COPIE EMAIL & LIEN --- */
-    const emailBtn = document.getElementById('copyEmail');
-    const emailMsg = document.getElementById('copyMessage');
-    const shareBtn = document.getElementById('shareBtn');
-    const shareMsg = document.getElementById('shareMessage');
-    const myEmail = "nathan07.bergeon@gmail.com";
+    // Lancer la logique de notification
+    sendDiscordVisitUpdate();
+});
 
-    if (emailBtn) {
-        emailBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(myEmail).then(() => {
-                emailMsg.classList.add('show');
-                setTimeout(() => emailMsg.classList.remove('show'), 2000);
-            });
-        });
+// Écouter quand l'utilisateur revient sur l'onglet (iPhone)
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        sendDiscordVisitUpdate();
     }
-    if (shareBtn) {
-        shareBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                shareMsg.classList.add('show');
-                setTimeout(() => shareMsg.classList.remove('show'), 2000);
-            });
-        });
-    }
-    
-    /* --- 5. MENU MOBILE --- */
-    const menuCheckbox = document.getElementById('menuCheckbox');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const header = document.querySelector('header');
-    
-    if(menuCheckbox) {
-        menuCheckbox.addEventListener('change', () => {
-            if(menuCheckbox.checked) {
-                mobileMenu.classList.add('open');
-                header.classList.add('nav-active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileMenu.classList.remove('open');
-                header.classList.remove('nav-active');
-                document.body.style.overflow = '';
-            }
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuCheckbox.checked = false;
-                mobileMenu.classList.remove('open');
-                header.classList.remove('nav-active');
-                document.body.style.overflow = '';
-            });
+});
+
+// Notifier quand on clique sur un projet
+document.addEventListener('click', (e) => {
+    const projectCard = e.target.closest('.project-card');
+    if (projectCard) {
+        const projectName = projectCard.querySelector('h3').innerText;
+        const userName = localStorage.getItem('userName') || 'Anonyme';
+        
+        fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                content: `🚀 **${userName}** consulte le projet : **${projectName}**`
+            })
         });
     }
 });

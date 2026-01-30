@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Réseau Filius - Nathan Bergeon</title>
+    <link rel="icon" type="image/gif" href="./images/icon_page.gif" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Nathan BERGEON</a></div>
+            
+            <div class="nav-wrapper">
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="chronologie.html">Chronologie</a></li>
+                        <li><a href="projets.html"class="active-link">Projets</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="right-actions-mobile">
+                    <button id="profileTrigger" class="profile-btn" title="Mon Profil">
+                        </button>
+
+                    <label class="hamburger" id="hamburgerLabel">
+                        <input type="checkbox" id="menuCheckbox" />
+                        <svg viewBox="0 0 32 32">
+                            <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                            <path class="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Accueil</a>
+        <a href="chronologie.html">Chronologie</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+
+    <section class="project-hero" style="background-image: url('./images/logo_filius.jpg');">
+        <div class="project-hero-overlay"></div>
+        <div class="container project-hero-content">
+            <a href="projets.html" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Retour aux projets
+            </a>
+            
+            <h1>Réseau & Protocoles</h1>
+
+            <div class="project-meta-badges">
+                <span class="meta-badge type">RÉSEAU</span>
+                <span class="meta-badge date"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> SPÉ NSI</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container project-layout">
+        
+        <main class="project-main-content">
+            
+            <div class="project-section">
+                <h2 class="section-title">À propos du projet</h2>
+                <p>
+                    Ce projet, réalisé dans le cadre de la spécialité NSI (Numérique et Sciences Informatiques), vise à concevoir et simuler un réseau local complet (LAN) à l'aide du logiciel <strong>Filius</strong>. L'objectif était de comprendre les interactions entre les différentes couches du modèle OSI et TCP/IP en configurant manuellement chaque composant : routeurs, serveurs et clients.
+                </p>
+            </div>
+
+            <div class="challenge-box">
+                <h3 class="challenge-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Cahier des charges
+                </h3>
+                <p>1. Création de 3 sous-réseaux (Salles 0, 1 et 2) interconnectés.</p>
+                <p>2. Mise en place d'un serveur Web hébergeant une page HTML personnalisée.</p>
+                <p>3. Configuration d'un serveur DNS pour la résolution de noms.</p>
+                <p>4. Installation de deux serveurs de messagerie distincts (domaines nsi.fr et nsi.com).</p>
+            </div>
+            <br>
+
+            <div class="project-section">
+                <h2 class="section-title">Architecture et Réalisation</h2>
+                <p>
+                    Le réseau final permet à n'importe quel poste de communiquer avec les autres, de consulter la page web hébergée et d'échanger des courriels entre différents domaines.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                        <span><strong>Adressage & Routage</strong><br>Configuration des IP statiques, masques de sous-réseau et tables de routage des passerelles.</span>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                        <span><strong>Services Mail</strong><br>Mise en place des protocoles SMTP (port 25) et POP3 (port 110) pour les utilisateurs Alice, Bibi, Coco, Doudou, Emi et Fifi.</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                        <span><strong>Web & DNS</strong><br>Hébergement d'un site sur 192.168.0.12 et résolution du nom via le serveur DNS sur 192.168.2.10.</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                        <span><strong>Analyse de trafic</strong><br>Observation des trames, du protocole ARP, ICMP (Ping) et des échanges TCP lors de l'envoi de données.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-section">
+                <h2 class="section-title">Documentation & Rapport</h2>
+                <p>Voici le rapport complet détaillant la configuration de chaque machine, les tables de routage et les échanges de données analysés durant le TP.</p>
+                
+                <div style="width: 100%; height: 600px; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin-top: 1rem;">
+                    <iframe src="./Projets/Filius/Reseau_filius.pdf" width="100%" height="100%" style="border: none;">
+                        <p>Votre navigateur ne supporte pas l'affichage PDF. <a href="Reseau_filius.pdf">Télécharger le PDF</a>.</p>
+                    </iframe>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="project-sidebar">
+            
+            <div class="sidebar-box">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg> Technologies</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag">Filius</span>
+                    <span class="tech-tag">TCP/IP</span>
+                    <span class="tech-tag">DNS</span>
+                    <span class="tech-tag">SMTP/POP3</span>
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <h4>Fichiers du projet</h4>
+                <div class="sidebar-links">
+                    
+                    <a href="./Projets/Filius/Reseau_filius.fls" download class="sidebar-btn">
+                        Télécharger la simulation (.fls)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </a>
+                    <a href="https://www.lernsoftware-filius.de/Herunterladen" target="_blank" class="sidebar-btn">
+                        Télécharge l'application Filius
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </a>
+                    <a href="./Projets/Filius/Reseau_filius.pdf" target="_blank" class="sidebar-btn secondary">
+                        Voir le rapport (.pdf)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </a>
+                    <a href="./Projets/Filius/filiusTpRevisions.pdf" target="_blank" class="sidebar-btn secondary">
+                        Voir la consigne du TP (.pdf)
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <h4>Concepts clés</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #ccc;">
+                    <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 6px; height: 6px; background: var(--accent-cyan); border-radius: 50%;"></span>
+                        Modèle OSI & TCP/IP
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 6px; height: 6px; background: var(--accent-cyan); border-radius: 50%;"></span>
+                        Résolution DNS
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 6px; height: 6px; background: var(--accent-cyan); border-radius: 50%;"></span>
+                        Routage statique
+                    </li>
+                    <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 6px; height: 6px; background: var(--accent-cyan); border-radius: 50%;"></span>
+                        Serveurs & Clients
+                    </li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <footer>
+        <p>&copy; Nathan Bergeon. Tous droits réservés.</p>
+    </footer>
+
+<div id="profile-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-glass">
+            <button id="close-modal-x" class="modal-close-x" aria-label="Fermer">×</button>
+
+            <div class="modal-header">
+                <h3>Bonjour et bienvenue.</h3>
+                <p>Voici mon portfolio. Identifiez-vous pour me faire part de votre venue.</p>
+            </div>
+            
+            <input type="text" id="user-name-input" class="modal-input" placeholder="Votre nom ou entreprise" autocomplete="off">
+
+            <div class="profile-cards-container">
+                <div class="profile-card" data-type="Curieux">
+                    <div class="card-icon">👋</div>
+                    <h4>Curieux</h4>
+                    <p>Découverte</p>
+                </div>
+                
+                <div class="profile-card" data-type="Ecole">
+                    <div class="card-icon">🎓</div>
+                    <h4>École</h4>
+                    <p>Académique</p>
+                </div>
+
+                <div class="profile-card" data-type="Entreprise">
+                    <div class="card-icon">💼</div>
+                    <h4>Recruteur</h4>
+                    <p>Professionnel</p>
+                </div>
+            </div>
+            
+            <button id="save-profile-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">Enregistrer</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
